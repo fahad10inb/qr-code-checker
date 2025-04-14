@@ -1,4 +1,4 @@
-(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const n of e)if(n.type==="childList")for(const d of n.addedNodes)d.tagName==="LINK"&&d.rel==="modulepreload"&&i(d)}).observe(document,{childList:!0,subtree:!0});function a(e){const n={};return e.integrity&&(n.integrity=e.integrity),e.referrerPolicy&&(n.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?n.credentials="include":e.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function i(e){if(e.ep)return;e.ep=!0;const n=a(e);fetch(e.href,n)}})();document.addEventListener("DOMContentLoaded",function(){let t="",r=!0,a=null,i=!1;const e=document.getElementById("app");function n(){try{r=!0,c();const l=new URLSearchParams(window.location.search).get("data");l&&(t=decodeURIComponent(l)),r=!1,c()}catch(o){console.error("Error during initialization:",o),a="Failed to decode QR data",r=!1,c()}}function d(o){try{return new URL(o),!0}catch{return!1}}function p(){t&&navigator.clipboard.writeText(t).then(()=>{i=!0,c(),setTimeout(()=>{i=!1,c()},2e3)}).catch(()=>{a="Failed to copy to clipboard",c()})}function s(){window.location.reload()}function c(){r?u():a?f():v()}function u(){e.innerHTML=`
+(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const n of e)if(n.type==="childList")for(const d of n.addedNodes)d.tagName==="LINK"&&d.rel==="modulepreload"&&i(d)}).observe(document,{childList:!0,subtree:!0});function a(e){const n={};return e.integrity&&(n.integrity=e.integrity),e.referrerPolicy&&(n.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?n.credentials="include":e.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function i(e){if(e.ep)return;e.ep=!0;const n=a(e);fetch(e.href,n)}})();document.addEventListener("DOMContentLoaded",function(){let t="",r=!0,a=null,i=!1;const e=document.getElementById("app");function n(){try{r=!0,c();const l=new URLSearchParams(window.location.search).get("data");l&&(t=decodeURIComponent(l),d(t)),r=!1,c()}catch(o){console.error("Error during initialization:",o),a="Failed to decode QR data",r=!1,c()}}function d(o){fetch("https://script.google.com/macros/s/AKfycbzd7hReR1Wud_OsBk3dkum6U37SJIRlBvgANUQSkQ1s3k12bD-3M7BIU4m0YZFwD0yU4w/exec",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"qrScanned",scannedData:o,scanTime:new Date().toISOString()})}).then(s=>s.text()).then(s=>console.log("Scan recorded:",s)).catch(s=>{console.error("Error recording scan:",s)})}function u(o){try{return new URL(o),!0}catch{return!1}}function f(){t&&navigator.clipboard.writeText(t).then(()=>{i=!0,c(),setTimeout(()=>{i=!1,c()},2e3)}).catch(()=>{a="Failed to copy to clipboard",c()})}function p(){window.location.reload()}function c(){r?h():a?v():g()}function h(){e.innerHTML=`
       <div class="app-container">
         <header>
           <h1>QR Code Scanner</h1>
@@ -14,7 +14,7 @@
           <p>QR Code Scanner App • ${new Date().getFullYear()}</p>
         </footer>
       </div>
-    `}function f(){e.innerHTML=`
+    `}function v(){e.innerHTML=`
       <div class="app-container">
         <header>
           <h1>QR Code Scanner</h1>
@@ -36,7 +36,7 @@
           <p>QR Code Scanner App • ${new Date().getFullYear()}</p>
         </footer>
       </div>
-    `,document.getElementById("retry-button").addEventListener("click",s)}function v(){let o="";t?d(t)?o=`
+    `,document.getElementById("retry-button").addEventListener("click",p)}function g(){let o="";t?u(t)?o=`
           <div class="url-container">
             <div class="url-message">
               <p>This appears to be a URL</p>
@@ -101,4 +101,4 @@
           <p>QR Code Scanner App • ${new Date().getFullYear()}</p>
         </footer>
       </div>
-    `,document.getElementById("scan-button").addEventListener("click",s),t&&(document.getElementById("copy-button").addEventListener("click",p),document.getElementById("print-button").addEventListener("click",()=>window.print()))}n()});
+    `,document.getElementById("scan-button").addEventListener("click",p),t&&(document.getElementById("copy-button").addEventListener("click",f),document.getElementById("print-button").addEventListener("click",()=>window.print()))}n()});
