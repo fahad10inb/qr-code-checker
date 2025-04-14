@@ -1,4 +1,9 @@
-(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const n of e)if(n.type==="childList")for(const d of n.addedNodes)d.tagName==="LINK"&&d.rel==="modulepreload"&&i(d)}).observe(document,{childList:!0,subtree:!0});function a(e){const n={};return e.integrity&&(n.integrity=e.integrity),e.referrerPolicy&&(n.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?n.credentials="include":e.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function i(e){if(e.ep)return;e.ep=!0;const n=a(e);fetch(e.href,n)}})();document.addEventListener("DOMContentLoaded",function(){let t="",r=!0,a=null,i=!1;const e=document.getElementById("app");function n(){try{r=!0,c();const l=new URLSearchParams(window.location.search).get("data");l&&(t=decodeURIComponent(l),d(t)),r=!1,c()}catch(o){console.error("Error during initialization:",o),a="Failed to decode QR data",r=!1,c()}}function d(o){fetch("https://script.google.com/macros/s/AKfycbzd7hReR1Wud_OsBk3dkum6U37SJIRlBvgANUQSkQ1s3k12bD-3M7BIU4m0YZFwD0yU4w/exec",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"qrScanned",scannedData:o,scanTime:new Date().toISOString()})}).then(s=>s.text()).then(s=>console.log("Scan recorded:",s)).catch(s=>{console.error("Error recording scan:",s)})}function u(o){try{return new URL(o),!0}catch{return!1}}function f(){t&&navigator.clipboard.writeText(t).then(()=>{i=!0,c(),setTimeout(()=>{i=!1,c()},2e3)}).catch(()=>{a="Failed to copy to clipboard",c()})}function p(){window.location.reload()}function c(){r?h():a?v():g()}function h(){e.innerHTML=`
+(function(){const a=document.createElement("link").relList;if(a&&a.supports&&a.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const o of e)if(o.type==="childList")for(const p of o.addedNodes)p.tagName==="LINK"&&p.rel==="modulepreload"&&s(p)}).observe(document,{childList:!0,subtree:!0});function c(e){const o={};return e.integrity&&(o.integrity=e.integrity),e.referrerPolicy&&(o.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?o.credentials="include":e.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function s(e){if(e.ep)return;e.ep=!0;const o=c(e);fetch(e.href,o)}})();document.addEventListener("DOMContentLoaded",function(){let t="",a=!0,c=null,s=!1;const e=document.getElementById("app");function o(){try{a=!0,d();const l=new URLSearchParams(window.location.search).get("data");l&&(t=decodeURIComponent(l),p(t)),a=!1,d()}catch(n){console.error("Error during initialization:",n),c="Failed to decode QR data",a=!1,d()}}function p(n){fetch("https://script.google.com/macros/s/AKfycbzd7hReR1Wud_OsBk3dkum6U37SJIRlBvgANUQSkQ1s3k12bD-3M7BIU4m0YZFwD0yU4w/exec",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"qrScanned",scannedData:n,scanTime:new Date().toISOString()})}).then(r=>r.text()).then(r=>console.log("Scan recorded:",r)).catch(r=>{console.error("Error recording scan:",r)})}function v(n){try{return new URL(n),!0}catch{return!1}}function h(){t&&navigator.clipboard.writeText(t).then(()=>{s=!0,d(),setTimeout(()=>{s=!1,d()},2e3)}).catch(()=>{c="Failed to copy to clipboard",d()})}function f(){window.location.reload()}function g(n){try{const l=JSON.parse(n);let r="";for(const[i,u]of Object.entries(l))r+=`<div class="data-row">
+          <strong>${i}:</strong> ${u}
+        </div>`;return`<div class="structured-data">${r}</div>`}catch{return`<div class="structured-data">${n.split(`
+`).map(i=>{const u=i.split(":");if(u.length>=2){const S=u[0].trim(),w=u.slice(1).join(":").trim();return`<div class="data-row">
+            <strong>${S}:</strong> ${w}
+          </div>`}return i?`<div class="data-row">${i}</div>`:""}).filter(i=>i).join("")}</div>`}}function d(){a?m():c?y():b()}function m(){e.innerHTML=`
       <div class="app-container">
         <header>
           <h1>QR Code Scanner</h1>
@@ -14,7 +19,7 @@
           <p>QR Code Scanner App • ${new Date().getFullYear()}</p>
         </footer>
       </div>
-    `}function v(){e.innerHTML=`
+    `}function y(){e.innerHTML=`
       <div class="app-container">
         <header>
           <h1>QR Code Scanner</h1>
@@ -25,7 +30,7 @@
           <div class="error-icon">⚠️</div>
           <div>
             <h3>Error</h3>
-            <p>${a}</p>
+            <p>${c}</p>
             <button id="retry-button" class="retry-button">
               <span class="icon">↻</span> Try Again
             </button>
@@ -36,7 +41,7 @@
           <p>QR Code Scanner App • ${new Date().getFullYear()}</p>
         </footer>
       </div>
-    `,document.getElementById("retry-button").addEventListener("click",p)}function g(){let o="";t?u(t)?o=`
+    `,document.getElementById("retry-button").addEventListener("click",f)}function b(){let n="";t?v(t)?n=`
           <div class="url-container">
             <div class="url-message">
               <p>This appears to be a URL</p>
@@ -52,13 +57,13 @@
             <p>Content length: ${t.length} characters</p>
             <p>Scanned: ${new Date().toLocaleString()}</p>
           </div>
-        `:o=`
-          <pre class="data-display">${t}</pre>
+        `:n=`
+          ${g(t)}
           <div class="meta-info">
             <p>Content length: ${t.length} characters</p>
             <p>Scanned: ${new Date().toLocaleString()}</p>
           </div>
-        `:o=`
+        `:n=`
         <div class="no-data">
           <p>No QR code data detected</p>
           <p class="hint">Scan a QR code with the format: ?data=your-data</p>
@@ -76,13 +81,13 @@
             ${t?`
               <button id="copy-button" class="copy-button">
                 <span class="icon">📋</span>
-                ${i?"Copied!":"Copy"}
+                ${s?"Copied!":"Copy"}
               </button>
             `:""}
           </div>
           
           <div class="card-body">
-            ${o}
+            ${n}
           </div>
         </div>
         
@@ -101,4 +106,4 @@
           <p>QR Code Scanner App • ${new Date().getFullYear()}</p>
         </footer>
       </div>
-    `,document.getElementById("scan-button").addEventListener("click",p),t&&(document.getElementById("copy-button").addEventListener("click",f),document.getElementById("print-button").addEventListener("click",()=>window.print()))}n()});
+    `,document.getElementById("scan-button").addEventListener("click",f),t&&(document.getElementById("copy-button").addEventListener("click",h),document.getElementById("print-button").addEventListener("click",()=>window.print()))}o()});
