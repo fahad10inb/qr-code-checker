@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/fahad10inb/qr-code-checker",
+  "homepage": "https://fahad10inb.github.io/qr-code-checker",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
